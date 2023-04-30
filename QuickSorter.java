@@ -37,6 +37,7 @@ public class QuickSorter {
                 break;
             default:
                 standardQuickSort(list, 0, list.size()-1);
+                break;
         }
         Long endTimer = System.nanoTime();
         Duration time = Duration.ofNanos(endTimer - timer);
@@ -72,21 +73,23 @@ public class QuickSorter {
 
     //if our pivot strategy is MEDIAN_OF_TWO_ELEMENTS
     public static <E extends Comparable<E>> void medianOfThreeRandomElementsQuickSort(ArrayList<E> list, int low, int high) {
-        int randomOne = randomNumGenerator(low, high);
-        int randomTwo = randomNumGenerator(low, high);
-        int randomThree = randomNumGenerator(low, high);
+     
         if(low >= high) {
             return;
         }
-        else {
-            int medianPivot = findMedian(list, randomOne, randomTwo, randomThree);
-            if(medianPivot != high) {
-                swap(list, medianPivot, high);
-            }
-            int newPivot = standardQuickSort(list, low, high);
-            medianOfThreeRandomElementsQuickSort(list, low, newPivot - 1);
-            medianOfThreeRandomElementsQuickSort(list, newPivot + 1, high);
+        int randomOne = randomNumGenerator(low, high);
+        int randomTwo = randomNumGenerator(low, high);
+        int randomThree = randomNumGenerator(low, high);
+        
+        int medianPivot = findMedian(list, randomOne, randomTwo, randomThree);
+        
+        if(medianPivot != high) {
+            swap(list, medianPivot, high);
         }
+        int newPivot = standardQuickSort(list, low, high);
+        medianOfThreeRandomElementsQuickSort(list, low, newPivot - 1);
+        medianOfThreeRandomElementsQuickSort(list, newPivot + 1, high);
+        
     }
 
     //if our pivot strategy is MEDIAN_OF_THREE_ELEMENTS
